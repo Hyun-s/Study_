@@ -4,7 +4,7 @@
 
 #### Abstract
 
-기존의 stylegan에서 generator의 정규화방법
+
 
 #### 1. Introduction
 

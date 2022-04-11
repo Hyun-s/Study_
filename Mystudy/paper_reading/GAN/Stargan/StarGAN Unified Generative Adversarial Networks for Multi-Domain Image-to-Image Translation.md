@@ -114,13 +114,22 @@ $$
 모든 데이터셋에서 전반적인 label에 맞는 확률 분포를 만들기 위해 D의 auxiliary classifier를 확장시킨다.
 이를 통해 D는 명확한 label에 관해서만 classification error를 최적화 시키도록 하게 된다.
 
+![image-20220312203402707](C:\Users\hyunsoo\AppData\Roaming\Typora\typora-user-images\image-20220312203402707.png)
+
 ## 4. Implementation
 
-GAN의 학습 성능 향상을 위해 Eq(1)대신에 gradient penalty와 Wasserstein GAN objective로 대체 하였다.
+GAN의 학습 안정성을 위해 Eq(1)대신에 gradient penalty와 Wasserstein GAN objective로 대체 하였다.
 $$
 \mathcal{L}_{adv} =  \mathbb{E}_x [D_{src}(x)] - \mathbb{E}_{x,c}[D_{src}(G(x,c))]\\ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -\lambda_{gp}\mathbb{E}_{\hat{x}}[(||\nabla_{\hat{x}}D_{src}(\hat{x})||_2 - 1)^2] ~~~~~~~~~~~~~~~(1)
 $$
-\~ 공부 더해보기
+여기서 gradient penalty에 대한 파라미터로는 10을 사용했다고 한다.
 
-wasserstein 거리, wgan_gp 
+### 5. Experiments
+
+**Learned role of mask vector**
+
+![image-20220312203857619](C:\Users\hyunsoo\AppData\Roaming\Typora\typora-user-images\image-20220312203857619.png)
+
+위의 그림은 mask vector의 효과를 알아보기 위해 잘못된 mask vector를 사용했던 실험의 결과로, 그림을 보면 각 감정에 맞는 표정합성에 실패하고 나이를 조작하고 있는 것을 볼 수 있다. 그런 이유로는 표정에 관한 벡터들을 무시하고, 나이에 관한 벡터들을 입력으로 받았기 때문이라고 한다. 이를 통해, 원하는 label에 focus를 둘 수 있도록 하려는 mask vector의 역할을 제대로 수행하고 학습했음을 확인할 수 있다.
+
